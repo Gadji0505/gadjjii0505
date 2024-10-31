@@ -19,13 +19,6 @@
         .navbar-nav .nav-link:hover {
             color: #A0AECD; /* Цвет текста при наведении на ссылки в меню */
         }
-        a {
-            color: #000000; /* Цвет текста гиперссылок */
-            text-decoration: none; /* Убираем подчеркивание */
-        }
-        a:hover {
-            color: #A0AECD; /* Цвет текста при наведении */
-        }
         .list-group-item {
             color: #000000; /* Цвет текста в списке гиперссылок */
         }
@@ -127,7 +120,7 @@
                         </tr>
                         <tr>
                             <td>Столик для кофе</td>
-                            <td>2500</td>
+                            <td>2000</td>
                         </tr>
                     </tbody>
                 </table>
@@ -183,18 +176,21 @@
             <form id="orderForm">
                 <div class="form-group">
                     <label for="product">Выберите товар:</label>
-                    <select id="product" class="form-control">
+                    <select id="product" class="form-control" onchange="calculateTotalCost()">
                         <option value="0">-- Выберите товар --</option>
                         <option value="1000">Стул - 1000 руб.</option>
                         <option value="3000">Стол - 3000 руб.</option>
                         <option value="5000">Шкаф - 5000 руб.</option>
                         <option value="8000">Кровать - 8000 руб.</option>
                         <option value="12000">Диван - 12000 руб.</option>
+                        <option value="1500">Тумбочка - 1500 руб.</option>
+                        <option value="4000">Комод - 4000 руб.</option>
+                        <option value="2000">Столик для кофе - 2000 руб.</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Количество:</label>
-                    <input type="number" id="quantity" class="form-control" min="1" required>
+                    <input type="number" id="quantity" class="form-control" min="1" required oninput="calculateTotalCost()">
                 </div>
             </form>
     
@@ -203,29 +199,28 @@
                 <div class="form-group">
                     <label>Тип услуги:</label>
                     <div>
-                        <input type="radio" name="serviceType" value="1" onclick="updateServiceOptions()" checked> Услуга 1 (Базовая комплектация)<br>
-                        <input type="radio" name="serviceType" value="2" onclick="updateServiceOptions()"> Услуга 2 (с опциями)<br>
-                        <input type="radio" name="serviceType" value="3" onclick="updateServiceOptions()"> Услуга 3 (свойства)<br>
+                        <input type="radio" name="serviceType" value="1" onclick="updateServiceOptions(); calculateTotalCost()" checked> Услуга 1 (Базовая комплектация)<br>
+                        <input type="radio" name="serviceType" value="2" onclick="updateServiceOptions(); calculateTotalCost()"> Услуга 2 (с опциями)<br>
+                        <input type="radio" name="serviceType" value="3" onclick="updateServiceOptions(); calculateTotalCost()"> Услуга 3 (свойства)<br>
                     </div>
                 </div>
                 <div id="optionsContainer" class="form-group" style="display: none;">
                     <label for="options">Выберите опцию:</label>
-                    <select id="options" class="form-control">
+                    <select id="options" class="form-control" onchange="calculateTotalCost()">
                         <option value="0">-- Выберите опцию --</option>
                         <option value="2000">Опция 1 (с доставкой) - 2000 руб.</option>
                         <option value="3500">Опция 2 (с доставкой и установкой) - 3500 руб.</option>
                     </select>
                 </div>
                 <div id="propertyContainer" class="form-group" style="display: none;">
-                    <label><input type="checkbox" id="property"> Свойство (страховка 500 руб.)</label>
+                    <label><input type="checkbox" id="property" onchange="calculateTotalCost()"> Свойство (страховка 500 руб.)</label>
                 </div>
                 <div class="form-group">
                     <label for="serviceQuantity">Количество:</label>
-                    <input type="number" id="serviceQuantity" class="form-control" min="1" required>
+                    <input type="number" id="serviceQuantity" class="form-control" min="1" required oninput="calculateTotalCost()">
                 </div>
             </form>
             
-            <button type="button" class="btn btn-primary" onclick="calculateTotalCost()">Подсчитать общую стоимость</button>
             <h3 class="mt-4">Общая стоимость: <span id="totalCost">0</span> руб.</h3>
         </div>
     
@@ -271,7 +266,7 @@
                 // Расчет стоимости услуги
                 const serviceType = document.querySelector('input[name="serviceType"]:checked').value;
                 const serviceQuantity = parseInt(document.getElementById('serviceQuantity').value);
-                let baseServicePrice = 1000; // Базовая цена для всех услуг
+                let baseServicePrice = 0; // Базовая цена для всех услуг
                 let totalServiceCost = 0;
     
                 if (serviceType === "2") {
@@ -295,4 +290,4 @@
             }
         </script>
     </body>
-    </html>
+</html>
