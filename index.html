@@ -266,17 +266,19 @@
                 // Расчет стоимости услуги
                 const serviceType = document.querySelector('input[name="serviceType"]:checked').value;
                 const serviceQuantity = parseInt(document.getElementById('serviceQuantity').value);
-                let baseServicePrice = 0; // Базовая цена для всех услуг
+                let baseServicePrice = 1000; // Базовая цена для всех услуг
                 let totalServiceCost = 0;
     
                 if (serviceType === "2") {
                     const optionSelect = document.getElementById('options');
                     const optionPrice = parseFloat(optionSelect.value);
                     if (optionPrice > 0 ) {
+                        baseServicePrice = 0;
                         baseServicePrice += optionPrice;
                     }
                 } else if (serviceType === "3") {
                     const propertyChecked = document.getElementById('property').checked;
+                    baseServicePrice = 0;
                     if (propertyChecked) {
                         baseServicePrice += 500; // Добавляем стоимость свойства
                     }
